@@ -1,0 +1,9 @@
+# binaries
+myfs_baseline
+myfs_cache
+
+# results
+results/
+
+# mac
+.DS_Store

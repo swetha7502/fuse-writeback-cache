@@ -1,15 +1,14 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 $(shell pkg-config --cflags fuse3)
-LDFLAGS = $(shell pkg-config --libs fuse3)
+CFLAGS = -Wall -Wextra -g $(shell pkg-config fuse3 --cflags)
+LIBS = $(shell pkg-config fuse3 --libs)
 
-TARGET = fuse_cache
+all: myfs_baseline myfs_cache
 
-all: $(TARGET)
+myfs_baseline: src/fuse_baseline.c
+	$(CC) $(CFLAGS) -o myfs_baseline src/fuse_baseline.c $(LIBS)
 
-$(TARGET): fuse_cache.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+myfs_cache: src/fuse_cache.c
+	$(CC) $(CFLAGS) -o myfs_cache src/fuse_cache.c $(LIBS)
 
 clean:
-	rm -f $(TARGET)
-
-.PHONY: all clean
+	rm -f myfs_baseline myfs_cache
